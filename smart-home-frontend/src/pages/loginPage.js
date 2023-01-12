@@ -1,12 +1,14 @@
 // import { useRouter } from "next/router";
 // import BasicLayout  from "../components/molecules/basic_layout"
 // import { useForm } from 'react-hook-form';
-import { useState } from 'react'
+import { useState } from "react";
 import styled from "styled-components";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { appColors } from "../components/utils/colors";
+import { useNavigate } from "react-router-dom";
 // import Link from "next/link";
 import axios from "axios";
+import { useSignIn } from "react-auth-kit";
 
 // const Card = styled.form`
 // display: flex;
@@ -30,8 +32,6 @@ const LoginContainer = styled.div`
   box-shadow: 7px 7px 27px -7px rgba(66, 68, 90, 1);
   z-index: 2;
   max-height: 90vh;
-
-
 
   & span {
     overflow: initial !important;
@@ -59,70 +59,93 @@ const Wrapper = styled.div`
 `;
 
 const FormWrapper = styled.form`
-    display:flex;
-    align-items:center;
-    flex-direction:column;
-    padding: 25px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 25px;
 `;
 
 const LoginButton = styled.button`
-font-size: 16px;
-color: white;
-padding: 8px 16px;
-font-weight: 500;
-outline: 0;
-border: 0;
-border-radius: 5px;
-height: min-content;
-white-space: nowrap;
-cursor: pointer;
-border:none;
-padding:12px 24px;
-width:100%;
-margin-bottom: 10px;
-background-color: ${appColors.darkGreen};
+  font-size: 16px;
+  color: white;
+  padding: 8px 16px;
+  font-weight: 500;
+  outline: 0;
+  border: 0;
+  border-radius: 5px;
+  height: min-content;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+  padding: 12px 24px;
+  width: 100%;
+  margin-bottom: 10px;
+  background-color: ${appColors.darkGreen};
 `;
 
 const StyledLink = styled(Link)`
-    color: ${appColors.darkGreen};
-    margin: "50px";
-    textDecoration: "none";
+  color: ${appColors.darkGreen};
+  margin: "50px";
+  //  textdecoration: "none";
 `;
 
+const LoginPage = () => {
+  // const router = useRouter();
+  const signIn = useSignIn();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const navigate = useNavigate();
 
-const LoginPage = () =>  {
-    // const router = useRouter();
+  function validForm() {
+    return email?.length > 0 && password?.length > 0;
+  }
 
-    const [ email, setEmail ] = useState();
-    const [ password, setPassword ] = useState();
+  // console.log(bodyFormData);
+  // console.log("Chuj");
+  const loginUser = async () => {
+    // await axios
+    //   .post("http://localhost:8080/user/login", {
+    //     username: email,
+    //     password: password,
+    //   })
+    //   .then((e) => {
+    //     console.log(e);
+    //   });
 
-    function validForm() {
-      return email?.length > 0 && password?.length > 0;
+    // jesli zwroci 200 to przenies na dashboard
+    // jak 400 to wyjebane
+
+    if (
+      signIn({
+        token: "",
+        tokenType: "Bearer",
+        expiresIn: 2,
+        authState: {
+          userID: "examle_user_id",
+          email: email,
+        },
+      })
+    ) {
+      // tym se mozeice przechodzic miedzy stronami
+      navigate("/dashboard");
+      console.log("true");
+    } else {
+      console.log("blad");
     }
 
-    // console.log(bodyFormData);
-    // console.log("Chuj");
-    const loginUser = async () => {
-      await axios.post("http://localhost:8080/user/login", {
-        username: email,
-        password: password
-      }).then((e) => {
-        console.log(e);
-      });
-      console.log("test");
-    };
+    console.log("test");
+  };
 
-   const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     console.log(email);
     console.log(password);
     loginUser();
     e.preventDefault();
-    };
+  };
 
   return (
-      <Wrapper>
+    <Wrapper>
       <LoginContainer>
-      
         {/* <Card onSubmit={handleSubmit}> */}
         <h1
           style={{
@@ -137,44 +160,57 @@ const LoginPage = () =>  {
         <p style={{ marginBottom: "0" }}>Panel logowania</p>
         <FormWrapper onSubmit={handleSubmit}>
           <label>Email</label>
-          <input type="text" name="email" onChange={e => setEmail(e.target.value)}
-          style={{
-            fontWeight: 600,
-            width: "100%",
-            height: "30px",
-            margin: "10px",
-            borderRadius: "5px",
-            color: "#5E6472",
-            background: "#e0dede",
-  
-            outline: "none",
-            border: "none"
-          }}
+          <input
+            type="text"
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+            style={{
+              fontWeight: 600,
+              width: "100%",
+              height: "30px",
+              margin: "10px",
+              borderRadius: "5px",
+              color: "#5E6472",
+              background: "#e0dede",
+
+              outline: "none",
+              border: "none",
+            }}
           ></input>
 
           <label>Hasło</label>
-          <input type="password" name="password" onChange={e => setPassword(e.target.value)}
-          style={{
-            fontWeight: 600,
-            width: "100%",
-            height: "30px",
-            margin: "10px",
-            borderRadius: "5px",
-            color: "#5E6472",
-            background: "#e0dede",
-  
-            outline: "none",
-            border: "none"
-          }}
+          <input
+            type="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+            style={{
+              fontWeight: 600,
+              width: "100%",
+              height: "30px",
+              margin: "10px",
+              borderRadius: "5px",
+              color: "#5E6472",
+              background: "#e0dede",
+
+              outline: "none",
+              border: "none",
+            }}
           ></input>
           {/* <input type="submit" disabled={!validForm()}></input> */}
-          <LoginButton disabled={!validForm()} onClick={handleSubmit}>Zaloguj</LoginButton>
+          <LoginButton disabled={!validForm()} onClick={handleSubmit}>
+            Zaloguj
+          </LoginButton>
           {/* <StyledLink to="/register">Utwórz konto</StyledLink> */}
-          <Link to="/register" style={{textDecoration: "none", color: appColors.darkGreen }}>Utwórz konto</Link>
+          <Link
+            to="/register"
+            style={{ textDecoration: "none", color: appColors.darkGreen }}
+          >
+            Utwórz konto
+          </Link>
         </FormWrapper>
-        </LoginContainer>
-        </Wrapper>
-  )
-}
+      </LoginContainer>
+    </Wrapper>
+  );
+};
 
 export default LoginPage;
