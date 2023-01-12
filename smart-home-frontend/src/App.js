@@ -1,21 +1,18 @@
 // import './App.css';
 import { Route } from "react-router-dom";
 import { BrowserRouter, Routes } from "react-router-dom";
-import Login from "./pages/loginPage.js"
-import Register from "./pages/registerPage.js"
-import Dashboard from "./pages/dashboardPage.js"
+import Login from "./pages/loginPage.js";
+import Register from "./pages/registerPage.js";
+import Dashboard from "./pages/dashboardPage.js";
+import { AuthProvider } from "react-auth-kit";
+import { RequireAuth } from "react-auth-kit";
+import RoutesComponent from "./Routes";
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login/>}></Route>
-          <Route path="/register" element={<Register/>}></Route>
-          <Route path="/dashboard" element={<Dashboard/>}></Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <AuthProvider authName={"_auth"} authType={"cookie"}>
+      <RoutesComponent />
+    </AuthProvider>
   );
 }
 
