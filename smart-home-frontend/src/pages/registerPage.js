@@ -91,7 +91,6 @@ const StyledLink = styled(Link)`
 `;
 
 const RegisterPage = () => {
-  // const router = useRouter();
   const signIn = useSignIn();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -102,30 +101,16 @@ const RegisterPage = () => {
   }
 
   const registerUser = async () => {
-    if (
-      signIn({
-        token: "",
-        tokenType: "Bearer",
-        expiresIn: 60,
-        authState: {
-          userID: "examle_user_id",
-        },
+    await axios
+      .post("http://localhost:8080/user/register", {
+        username: email,
+        password: password,
+        MAC: MAC,
       })
-    ) {
-      console.log("zalogowano");
-    } else {
-      console.log("chuj");
-    }
-    // await axios
-    //   .post("http://localhost:8080/user/register", {
-    //     username: email,
-    //     password: password,
-    //     MAC: MAC,
-    //   })
-    //   .then((e) => {
-    //     console.log(e);
-    //   });
-    // console.log("test");
+      .then((e) => {
+        console.log(e);
+      });
+    console.log("test");
   };
 
   const handleSubmit = (e) => {

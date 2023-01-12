@@ -1,6 +1,3 @@
-// import { useRouter } from "next/router";
-// import BasicLayout  from "../components/molecules/basic_layout"
-// import { useForm } from 'react-hook-form';
 import { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -23,7 +20,7 @@ const DashboardPage = () => {
   return (
     <Dupa className="Dashboard">
       <Sidebar />
-      <Dupa2>Siema {auth().email} </Dupa2>
+      <Dupa2>Siema {auth().username} </Dupa2>
     </Dupa>
   );
 };

@@ -1,6 +1,3 @@
-// import { useRouter } from "next/router";
-// import BasicLayout  from "../components/molecules/basic_layout"
-// import { useForm } from 'react-hook-form';
 import { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -92,53 +89,48 @@ const StyledLink = styled(Link)`
 const LoginPage = () => {
   // const router = useRouter();
   const signIn = useSignIn();
-  const [email, setEmail] = useState();
+  const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
 
   function validForm() {
-    return email?.length > 0 && password?.length > 0;
+    return username?.length > 0 && password?.length > 0;
   }
 
-  // console.log(bodyFormData);
-  // console.log("Chuj");
   const loginUser = async () => {
-    // await axios
-    //   .post("http://localhost:8080/user/login", {
-    //     username: email,
-    //     password: password,
-    //   })
-    //   .then((e) => {
-    //     console.log(e);
-    //   });
-
-    // jesli zwroci 200 to przenies na dashboard
-    // jak 400 to wyjebane
-
-    if (
-      signIn({
-        token:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        tokenType: "Bearer",
-        expiresIn: 60,
-        authState: {
-          userID: "examle_user_id",
-          email: email,
-        },
+    await axios
+      .post("http://localhost:8080/user/login", {
+        username: username,
+        password: password,
       })
-    ) {
-      // tym se mozeice przechodzic miedzy stronami
-      navigate("/dashboard");
-      console.log("true");
-    } else {
-      console.log("blad");
-    }
+      .then((e) => {
+        console.log(e);
+        if (
+          signIn({
+            token:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+            tokenType: "Bearer",
+            expiresIn: 60,
+            authState: {
+              userID: e.data.userId,
+              username: username,
+            },
+          })
+        ) {
+          // tym se mozeice przechodzic miedzy stronami
+          navigate("/dashboard");
+          console.log("true");
+        } else {
+          console.log("blad");
+        }
+    
+      });
 
     console.log("test");
   };
 
   const handleSubmit = (e) => {
-    console.log(email);
+    console.log(username);
     console.log(password);
     loginUser();
     e.preventDefault();
@@ -164,7 +156,7 @@ const LoginPage = () => {
           <input
             type="text"
             name="email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
             style={{
               fontWeight: 600,
               width: "100%",
