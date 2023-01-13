@@ -16,10 +16,11 @@ const RoutesComponent = () => {
         <Route path={"/login"} element={<LoginPage />} />
         <Route path={"/register"} element={<RegisterPage />} />
         {/* Strona prywatna, zawsze zwracaj komponent docelowy przez funkcje */}
-        <Route
+        {/* <Route
           path={"/dashboard"}
           element={<PrivateRoute Component={() => <DashboardPage />} />}
-        />
+        /> */}
+        <Route path={"/dashboard"} element={<DashboardPage />} />
       </Routes>
     </BrowserRouter>
   );

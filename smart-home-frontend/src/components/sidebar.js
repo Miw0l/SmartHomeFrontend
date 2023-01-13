@@ -1,82 +1,58 @@
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import { appColors } from "./utils/colors";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import { useSignOut } from "react-auth-kit";
+import { MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { Menu } from 'antd';
 
-const styledNavLink = styled(NavLink)`
-  display: flex;
-`;
 
-const NavbarCenter = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 10px;
-`;
+function getItem(label, key, icon, children, type) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  };
+}
+const items = [
+  getItem('Navigation One', 'sub1', <MailOutlined />, [
+    getItem('Item 1', 'g1', null, [getItem('Option 1', '1'), getItem('Option 2', '2')], 'group'),
+    getItem('Item 2', 'g2', null, [getItem('Option 3', '3'), getItem('Option 4', '4')], 'group'),
+  ]),
+  getItem('Navigation Three', 'sub4', <SettingOutlined />, [
+    getItem('Option 9', '9'),
+    getItem('Option 10', '10'),
+    getItem('Option 11', '11'),
+    getItem('Option 12', '12'),
+  ]),
+  getItem('Group', 'grp', null, [getItem('Option 13', '13'), getItem('Option 14', '14')], 'group'),
+];
 
-const MyStyleNavLink = {
-  padding: 10,
-  textDecoration: "none",
-  color: "black",
+const divStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center"
 };
-
-const Sidebar1 = styled.div`
-  flex: 1;
-  align-items: center;
-  border-right: 0.5px solid;
-  min-height: 100vh;
-`;
-
-const Topdiv = styled.div`
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 const Sidebar = () => {
-  const signOut = useSignOut();
-  const handleLogOut = () => {
-    signOut();
+  const onClick = (e) => {
+    console.log('click ', e);
   };
   return (
-    <Sidebar1 className="Sidebar">
-      <Topdiv className="top">
-        <span
-          style={{
-            fontSize: 20,
-            fontWeight: "bold",
-            color: appColors.darkGreen,
-          }}
-        >
-          Smart home
-        </span>
-      </Topdiv>
-      <hr />
-      <NavbarCenter className="center">
-        <ul>
-          <DashboardIcon />
-          <NavLink className="navbar" style={MyStyleNavLink}>
-            Dashboard
-          </NavLink>
-        </ul>
-        <NavLink className="navbar" style={MyStyleNavLink}>
-          Wykresy
-        </NavLink>
-        <NavLink className="navbar" style={MyStyleNavLink}>
-          Informacje o uzytkowniku
-        </NavLink>
-        {/* <NavLink className="navbar" style={MyStyleNavLink}>
-          Wyloguj
-        </NavLink> */}
-      </NavbarCenter>
-      <div onClick={handleLogOut} className="bottom">
-        Wyloguj
+    <div className='Sidebar'>
+      <div className='NazwaProjektu' style={divStyle}>
+        <h2 style={{color: "white"}}>Smart home</h2>
       </div>
-    </Sidebar1>
+    <Menu
+          theme="dark"
+          mode="vertical"
+          defaultSelectedKeys={['2']}
+          items={new Array(3).fill(null).map((_, index) => {
+            const key = index + 1;
+            return {
+              key,
+              label: `nav ${key}`,
+            };
+          })}
+        />
+    </div>
   );
 };
-
 export default Sidebar;
