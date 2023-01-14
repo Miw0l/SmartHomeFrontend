@@ -60,7 +60,7 @@ const Sidebar = () => {
           </Menu.Item>
           <Menu.Item style={liStyle}>
             <AiOutlineUser size={20} className="icon"/>
-          <span onClick={console.log("test")}>Informacje o uzytkowniku</span>
+          <span>Informacje o uzytkowniku</span>
           </Menu.Item>
         </Menu>
         <div className='logout'>
