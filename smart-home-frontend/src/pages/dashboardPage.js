@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { appColors } from "../components/utils/colors";
@@ -28,19 +28,38 @@ const Row = styled.div`
 `;
 
 const DashboardPage = () => {
+  const [temperature, setTemperature] = useState([]);
+  const [sensorsList, setSensorsList] = useState([]);
+  const [observation, setObservation] = useState([]);
   const auth = useAuthUser();
-  console.log(auth());
+  const user = auth();
 
-  const config2 = {
-    data: messages,
-    padding: "auto",
-    xField: "Date",
-    yField: "scales",
-    xAxis: {
-      // type: 'timeCat',
-      tickCount: 5,
-    },
+  useEffect(() => {
+    handleFetchObservation();
+    handleFetchSensors();
+  }, []);
+
+  const handleFetchSensors = async () => {
+    const response = await fetch(
+      `http://localhost:8080/sensor/getAll/user/` + auth().user
+    );
+    const data = await response.json();
+    setSensorsList([...sensorsList, ...data]);
+    console.log(data);
   };
+
+  const handleFetchObservation = async () => {
+    const tempOutdoorSensorId = auth().devices[0].sensors[0].id;
+    const response = await fetch(
+      `http://localhost:8080/observation/get/` + tempOutdoorSensorId
+    );
+    const data = await response.json();
+    observation.push(data);
+    setTemperature(observation.at(0));
+    setObservation([...observation, ...data]);
+    console.log(data);
+  };
+  
 
   const config = {
     legend: {
@@ -52,7 +71,7 @@ const DashboardPage = () => {
     },
     tooltip: {
       showTitle: true,
-      title: "Wykres tempertarasdy w pomieszczeniu",
+      title: "Wykres temperatury na zewnątrz",
     },
     animation: {
       appear: {
@@ -60,7 +79,7 @@ const DashboardPage = () => {
         duration: 5000,
       },
     },
-    data: messages,
+    data: temperature,
     xField: "creationDt",
     yField: "value",
     xAxis: {
@@ -85,7 +104,7 @@ const DashboardPage = () => {
             title="Wykres temperatury na zewnątrz"
             config={config}
             subtitle="Średnia temperatura:"
-            mediana={21.7}
+            extraValue={21.7}
           />
           <ChartTile
             title="Wykres temperatury na zewnątrz"

@@ -98,13 +98,13 @@ const LoginPage = () => {
   }
 
   const loginUser = async () => {
-    // await axios
-    //   .post("http://localhost:8080/user/login", {
-    //     username: username,
-    //     password: password,
-    //   })
-    //   .then((e) => {
-    // console.log(e);
+    await axios
+      .post("http://localhost:8080/user/login", {
+        username: username,
+        password: password,
+      })
+      .then((e) => {
+    console.log(e);
     if (
       signIn({
         token:
@@ -112,14 +112,10 @@ const LoginPage = () => {
         tokenType: "Bearer",
         expiresIn: 60,
         authState: {
-          user: "awdawd",
-          usernamme: "awdawdawd",
-          devices: "awddawd",
-          mac: "awdawdwad",
-          // user: e.data.id,
-          // username: e.data.username,
-          // devices: e.data.devices,
-          // mac: e.data.MAC,
+          user: e.data.id,
+          username: e.data.username,
+          devices: e.data.devices,
+          mac: e.data.MAC,
         },
       })
     ) {
@@ -130,7 +126,7 @@ const LoginPage = () => {
       console.log("blad");
     }
 
-    // });
+     });
 
     console.log("test");
   };

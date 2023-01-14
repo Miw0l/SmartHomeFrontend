@@ -34,9 +34,10 @@ const TemperatureIndoorChart = () => {
       `http://localhost:8080/sensor/getAll/user/` + auth().user
     );
     const data = await response.json();
-    sensorsList.push(data);
+    //sensorsList.push(data);
     //console.log(sensorsList);
     setSensorsList([...sensorsList, ...data]);
+    console.log(sensorsList);
   };
 
   const handleFetchObservation = async () => {
@@ -45,9 +46,11 @@ const TemperatureIndoorChart = () => {
       `http://localhost:8080/observation/get/` + tempOutdoorSensorId
     );
     const data = await response.json();
-    observation.push(data);
-    setTemperature(observation.at(0));
     console.log(data);
+    //observation.push(data);
+    //setTemperature(observation.at(0));
+    setObservation([...observation, ...data]);
+    //console.log(data);
   };
 
   const config = {
@@ -68,7 +71,7 @@ const TemperatureIndoorChart = () => {
         duration: 5000,
       },
     },
-    data: messages,
+    data: observation,
     xField: "creationDt",
     yField: "value",
     xAxis: {
