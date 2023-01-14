@@ -1,20 +1,16 @@
-import { MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { useSignOut } from "react-auth-kit";
 import { Menu } from 'antd';
 import { AiOutlineHome } from "react-icons/ai";
 import { NavLink, useLocation } from "react-router-dom";
 import "../styles/components/sidebarItem.css";
-import { useSignOut } from "react-auth-kit";
 
 import {
-  HomeOutlined,
   AiOutlineDashboard,
   AiOutlineLineChart,
   AiOutlineUser,
   AiOutlineLogout
 } from "react-icons/ai";
-import { MenuItem } from '@mui/material';
-import { flexbox } from '@mui/system';
-import { MenuUnstyled } from '@mui/base';
+
 
 const divStyle = {
   display: "flex",
@@ -37,13 +33,13 @@ const liStyle = {
 }
 
 const Sidebar = () => {
-  const onClick = (e) => {
-    console.log('click ', e);
-  };
-
   const signOut = useSignOut();
   const handleLogOut = () => {
     signOut();
+  };
+
+  const onClick = (e) => {
+    console.log('click ', e);
   };
 
   return (
@@ -53,18 +49,6 @@ const Sidebar = () => {
         <h2 style={{color: "white"}}>Smart home</h2>
       </div>
       <hr/>
-    {/* <Menu
-          theme="dark"
-          mode="vertical"
-          defaultSelectedKeys={['2']}
-          items={new Array(3).fill(null).map((_, index) => {
-            const key = index + 1;
-            return {
-              key,
-              label: `nav ${key}`,
-            };
-          })}
-        /> */}
         <Menu theme={"dark"} mode={"vertical"} style={menuStyle}>
           <Menu.Item style={liStyle}>
             <AiOutlineDashboard size={20} className="icon"/>

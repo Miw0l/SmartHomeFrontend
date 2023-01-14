@@ -112,8 +112,10 @@ const LoginPage = () => {
             tokenType: "Bearer",
             expiresIn: 60,
             authState: {
-              userID: e.data.userId,
-              username: username,
+              user: e.data.id,
+              username: e.data.username,
+              devices: e.data.devices,
+              mac: e.data.MAC
             },
           })
         ) {

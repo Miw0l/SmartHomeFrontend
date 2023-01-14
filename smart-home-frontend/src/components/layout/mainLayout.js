@@ -4,6 +4,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import PersonIcon from '@mui/icons-material/Person';
 import Sidebar from "../sidebar";
+import TemperatureIndoorChart from "../temperatureOutdoor"
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -16,7 +17,14 @@ const MainLayout = () => {
         </Sider>
       <Layout>
         <Header>Header</Header>
-        <Content>Content</Content>
+        <Content>
+          <div>
+            <h2></h2>
+            <div>
+              <TemperatureIndoorChart style={{top: `-1100px`}}></TemperatureIndoorChart>
+            </div>
+          </div>
+        </Content>
         <Footer>Footer</Footer>
       </Layout>
     </Layout>
