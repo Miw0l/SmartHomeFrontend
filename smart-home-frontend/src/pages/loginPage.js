@@ -98,35 +98,39 @@ const LoginPage = () => {
   }
 
   const loginUser = async () => {
-    await axios
-      .post("http://localhost:8080/user/login", {
-        username: username,
-        password: password,
+    // await axios
+    //   .post("http://localhost:8080/user/login", {
+    //     username: username,
+    //     password: password,
+    //   })
+    //   .then((e) => {
+    // console.log(e);
+    if (
+      signIn({
+        token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        tokenType: "Bearer",
+        expiresIn: 60,
+        authState: {
+          user: "awdawd",
+          usernamme: "awdawdawd",
+          devices: "awddawd",
+          mac: "awdawdwad",
+          // user: e.data.id,
+          // username: e.data.username,
+          // devices: e.data.devices,
+          // mac: e.data.MAC,
+        },
       })
-      .then((e) => {
-        console.log(e);
-        if (
-          signIn({
-            token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-            tokenType: "Bearer",
-            expiresIn: 60,
-            authState: {
-              user: e.data.id,
-              username: e.data.username,
-              devices: e.data.devices,
-              mac: e.data.MAC
-            },
-          })
-        ) {
-          // tym se mozeice przechodzic miedzy stronami
-          navigate("/dashboard");
-          console.log("true");
-        } else {
-          console.log("blad");
-        }
-    
-      });
+    ) {
+      // tym se mozeice przechodzic miedzy stronami
+      navigate("/dashboard");
+      console.log("true");
+    } else {
+      console.log("blad");
+    }
+
+    // });
 
     console.log("test");
   };
