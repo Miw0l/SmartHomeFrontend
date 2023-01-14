@@ -10,8 +10,8 @@ const { Header, Content, Footer, Sider } = Layout;
 
 const MainLayout = () => {
     return (
-      <Layout>
-      <Sider style={{minHeight:"100vh"}}>
+      <Layout style={{height:"100vh"}}>
+      <Sider style={{minHeight:"100vh"}} width={250}>
         <Sidebar/>
         </Sider>
       <Layout>

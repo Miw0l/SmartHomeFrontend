@@ -1,46 +1,59 @@
 import { MailOutlined, SettingOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
+import { AiOutlineHome } from "react-icons/ai";
+import { NavLink, useLocation } from "react-router-dom";
+import "../styles/components/sidebarItem.css";
+import { useSignOut } from "react-auth-kit";
 
-
-function getItem(label, key, icon, children, type) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  };
-}
-const items = [
-  getItem('Navigation One', 'sub1', <MailOutlined />, [
-    getItem('Item 1', 'g1', null, [getItem('Option 1', '1'), getItem('Option 2', '2')], 'group'),
-    getItem('Item 2', 'g2', null, [getItem('Option 3', '3'), getItem('Option 4', '4')], 'group'),
-  ]),
-  getItem('Navigation Three', 'sub4', <SettingOutlined />, [
-    getItem('Option 9', '9'),
-    getItem('Option 10', '10'),
-    getItem('Option 11', '11'),
-    getItem('Option 12', '12'),
-  ]),
-  getItem('Group', 'grp', null, [getItem('Option 13', '13'), getItem('Option 14', '14')], 'group'),
-];
+import {
+  HomeOutlined,
+  AiOutlineDashboard,
+  AiOutlineLineChart,
+  AiOutlineUser,
+  AiOutlineLogout
+} from "react-icons/ai";
+import { MenuItem } from '@mui/material';
+import { flexbox } from '@mui/system';
+import { MenuUnstyled } from '@mui/base';
 
 const divStyle = {
   display: "flex",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
+  padding: 10
 };
+
+const menuStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "column"
+};
+
+const liStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center"
+}
 
 const Sidebar = () => {
   const onClick = (e) => {
     console.log('click ', e);
   };
+
+  const signOut = useSignOut();
+  const handleLogOut = () => {
+    signOut();
+  };
+
   return (
     <div className='Sidebar'>
       <div className='NazwaProjektu' style={divStyle}>
+        <AiOutlineHome size={30} style={{color: "white", margin: 5}}/>
         <h2 style={{color: "white"}}>Smart home</h2>
       </div>
-    <Menu
+      <hr/>
+    {/* <Menu
           theme="dark"
           mode="vertical"
           defaultSelectedKeys={['2']}
@@ -51,7 +64,27 @@ const Sidebar = () => {
               label: `nav ${key}`,
             };
           })}
-        />
+        /> */}
+        <Menu theme={"dark"} mode={"vertical"} style={menuStyle}>
+          <Menu.Item style={liStyle}>
+            <AiOutlineDashboard size={20} className="icon"/>
+          <span>Dashboard</span>
+          </Menu.Item>
+          <Menu.Item style={liStyle}>
+            <AiOutlineLineChart size={20} className="icon"/>
+          <span>Wykresy</span>
+          </Menu.Item>
+          <Menu.Item style={liStyle}>
+            <AiOutlineUser size={20} className="icon"/>
+          <span onClick={console.log("test")}>Informacje o uzytkowniku</span>
+          </Menu.Item>
+        </Menu>
+        <div className='logout'>
+          <AiOutlineLogout className="icon" size={20}/>
+          <NavLink className='logoutBtn' to={"/login"}>
+            <span onClick={handleLogOut}>Wyloguj</span>
+            </NavLink>
+        </div>
     </div>
   );
 };

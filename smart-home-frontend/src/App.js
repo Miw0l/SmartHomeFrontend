@@ -7,6 +7,7 @@ import Dashboard from "./pages/dashboardPage.js";
 import { AuthProvider } from "react-auth-kit";
 import { RequireAuth } from "react-auth-kit";
 import RoutesComponent from "./Routes";
+import "./styles/body.css";
 
 function App() {
   return (
