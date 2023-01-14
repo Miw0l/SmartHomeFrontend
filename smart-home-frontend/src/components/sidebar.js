@@ -1,82 +1,75 @@
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import { appColors } from "./utils/colors";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useSignOut } from "react-auth-kit";
+import { Menu } from 'antd';
+import { AiOutlineHome } from "react-icons/ai";
+import { NavLink, useLocation } from "react-router-dom";
+import "../styles/components/sidebarItem.css";
 
-const styledNavLink = styled(NavLink)`
-  display: flex;
-`;
+import {
+  AiOutlineDashboard,
+  AiOutlineLineChart,
+  AiOutlineUser,
+  AiOutlineLogout
+} from "react-icons/ai";
 
-const NavbarCenter = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 10px;
-`;
 
-const MyStyleNavLink = {
-  padding: 10,
-  textDecoration: "none",
-  color: "black",
+const divStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 10
 };
 
-const Sidebar1 = styled.div`
-  flex: 1;
-  align-items: center;
-  border-right: 0.5px solid;
-  min-height: 100vh;
-`;
+const menuStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "column"
+};
 
-const Topdiv = styled.div`
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+const liStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center"
+}
 
 const Sidebar = () => {
   const signOut = useSignOut();
   const handleLogOut = () => {
     signOut();
   };
+
+  const onClick = (e) => {
+    console.log('click ', e);
+  };
+
   return (
-    <Sidebar1 className="Sidebar">
-      <Topdiv className="top">
-        <span
-          style={{
-            fontSize: 20,
-            fontWeight: "bold",
-            color: appColors.darkGreen,
-          }}
-        >
-          Smart home
-        </span>
-      </Topdiv>
-      <hr />
-      <NavbarCenter className="center">
-        <ul>
-          <DashboardIcon />
-          <NavLink className="navbar" style={MyStyleNavLink}>
-            Dashboard
-          </NavLink>
-        </ul>
-        <NavLink className="navbar" style={MyStyleNavLink}>
-          Wykresy
-        </NavLink>
-        <NavLink className="navbar" style={MyStyleNavLink}>
-          Informacje o uzytkowniku
-        </NavLink>
-        {/* <NavLink className="navbar" style={MyStyleNavLink}>
-          Wyloguj
-        </NavLink> */}
-      </NavbarCenter>
-      <div onClick={handleLogOut} className="bottom">
-        Wyloguj
+    <div className='Sidebar'>
+      <div className='NazwaProjektu' style={divStyle}>
+        <AiOutlineHome size={30} style={{color: "white", margin: 5}}/>
+        <h2 style={{color: "white"}}>Smart home</h2>
       </div>
-    </Sidebar1>
+      <hr/>
+        <Menu theme={"dark"} mode={"vertical"} style={menuStyle}>
+          <Menu.Item style={liStyle}>
+            <AiOutlineDashboard size={20} className="icon"/>
+          <span>Dashboard</span>
+          </Menu.Item>
+          <Menu.Item style={liStyle}>
+            <AiOutlineLineChart size={20} className="icon"/>
+          <span>Wykresy</span>
+          </Menu.Item>
+          <Menu.Item style={liStyle}>
+            <AiOutlineUser size={20} className="icon"/>
+          <span onClick={console.log("test")}>Informacje o uzytkowniku</span>
+          </Menu.Item>
+        </Menu>
+        <div className='logout'>
+          <AiOutlineLogout className="icon" size={20}/>
+          <NavLink className='logoutBtn' to={"/login"}>
+            <span onClick={handleLogOut}>Wyloguj</span>
+            </NavLink>
+        </div>
+    </div>
   );
 };
-
 export default Sidebar;

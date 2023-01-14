@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { appColors } from "../components/utils/colors";
 import Sidebar from "../components/sidebar";
 import { useAuthUser } from "react-auth-kit";
+import MainLayout from "../components/layout/mainLayout";
 
 const Dupa = styled.div`
   display: flex;
@@ -18,10 +19,9 @@ const DashboardPage = () => {
   const auth = useAuthUser();
   console.log(auth());
   return (
-    <Dupa className="Dashboard">
-      <Sidebar />
-      <Dupa2>Siema {auth().username} </Dupa2>
-    </Dupa>
+    <div>
+      <MainLayout/>
+    </div>
   );
 };
 
