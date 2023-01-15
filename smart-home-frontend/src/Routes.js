@@ -6,6 +6,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import LoginPage from "./pages/loginPage";
 import RegisterPage from "./pages/registerPage";
 import DashboardPage from "./pages/dashboardPage";
+import ChartPage from "./pages/chartPage";
 
 const RoutesComponent = () => {
   return (
@@ -18,6 +19,14 @@ const RoutesComponent = () => {
         {/* Strona prywatna, zawsze zwracaj komponent docelowy przez funkcje */}
          <Route
           path={"/dashboard"}
+          element={<PrivateRoute Component={() => <DashboardPage />} />}
+        /> 
+          <Route
+          path={"/Wykresy"}
+          element={<PrivateRoute Component={() => <ChartPage />} />}
+        /> 
+          <Route
+          path={"/Informacje"}
           element={<PrivateRoute Component={() => <DashboardPage />} />}
         /> 
       </Routes>

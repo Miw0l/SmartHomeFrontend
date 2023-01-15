@@ -12,7 +12,10 @@ import InfoTile from "../components/infoTile";
 import "../styles/dashboard.css";
 import { Info } from "@mui/icons-material";
 import { Box, Grid } from "@mui/material";
-import {TbTemperatureCelsius} from "react-icons/tb"
+import { TbTemperatureCelsius } from "react-icons/tb";
+import { Select } from "antd";
+import { options } from "../data/chartsOptions";
+import { Line } from "@ant-design/plots";
 
 const Dupa = styled.div`
   display: flex;
@@ -72,6 +75,10 @@ const DashboardPage = () => {
     legend: {
       title: "dupa",
     },
+    slider: {
+        start: 0.1,
+        end: 0.5,
+      },
     title: {
       visible: true,
       text: "dupa",
@@ -109,65 +116,23 @@ const DashboardPage = () => {
         <div className="napisBaner">
           <h1 className="Napis">Witaj {user.username}!</h1>
         </div>
+        <p>Wybierz jaki wykres ma zostać wyświetlony</p>
+        <Select
+          showSearch
+          style={{
+            width: 300,
+          }}
+          placeholder="Wybierz wykres"
+          options={options}
+        />
       </div>
       <div>
-      <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-        <Box gridColumn="span 3">
-        <InfoTile
-            title="Temperatura na zewnątrz wynosi:"
-            config={"config"}
-            icon={
-              <TbTemperatureCelsius
-                size={30}
-              />}
-            subtitle="Średnia temperatura:"
-            extraValue={21.7}
-          />
-        </Box>
-        <Box gridColumn="span 3" >
-        <InfoTile
-            title="Wykres temperatury na zewnątrz"
-            config={"config"}
-            subtitle="Średnia temperatura:"
-            extraValue={21.7}
-          />
-        </Box>
-        <Box gridColumn="span 3">
-        <InfoTile
-            title="Wykres temperatury na zewnątrz"
-            config={"config"}
-            subtitle="Średnia temperatura:"
-            extraValue={21.7}
-          />
-        </Box>
-        <Box gridColumn="span 3" >
-        <InfoTile
-            title="Wykres temperatury na zewnątrz"
-            config={"config"}
-            subtitle="Średnia temperatura:"
-            extraValue={21.7}
-          />
-        </Box>
-
-        {/* ROW 2 */}
-
-        <Box gridColumn="span 6" gridRow="span 2">
         <ChartTile
-            title="Wykres temperatury na zewnątrz"
-            config={config}
-            subtitle="Średnia temperatura:"
-            extraValue={21.7}
-          />
-        </Box>
-        <Box gridColumn="span 6" gridRow="span 2">
-        <ChartTile
-            title="Wykres temperatury na zewnątrz"
-            config={config}
-            subtitle="Średnia temperatura:"
-            extraValue={21.7}
-          />
-        </Box>
-      </Box>
+          // title="Wykres temperatury na zewnątrz"
+          config={config}
+        //   chartType="Area"
+        />
+        {/* <Line {...config} /> */}
       </div>
     </MainLayout>
   );

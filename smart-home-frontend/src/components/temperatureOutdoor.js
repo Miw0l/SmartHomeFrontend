@@ -71,7 +71,7 @@ const TemperatureIndoorChart = () => {
         duration: 5000,
       },
     },
-    data: observation,
+    data: messages,
     xField: "creationDt",
     yField: "value",
     xAxis: {
