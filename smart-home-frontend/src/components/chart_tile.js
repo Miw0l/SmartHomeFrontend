@@ -10,7 +10,7 @@ const Header = styled.h2`
 const ImportantText = styled.p`
   font-weight: bold;
   font-size: 18px;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   position: relative;
 `;
 
@@ -26,11 +26,30 @@ const Container = styled.div`
 `;
 
 const Mediana = styled.p`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
-  margin-top: 0;
+  margin-bottom: 10px;
+  margin-left: 10px;
   color: green;
 `;
+
+const Icon = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 7px;
+  margin-left: 5px;
+  color: black;
+`;
+
+
+const StyledDiv = styled.div`
+  align-items: center;
+  display: flex;
+  margin-right: 30px;
+  justify-content: flex-start;
+  margin-bottom: 0px;
+`;
+
 
 const getIconFromName = ({chartType, config}) => {
   switch (chartType) {
@@ -51,6 +70,7 @@ const ChartTile = ({
   extraValue,
   subtitle,
   flex,
+  icon
 }) => {
   // const Chart = getIconFromName(chartType, config);
   return (
@@ -58,8 +78,11 @@ const ChartTile = ({
       <Header>{title}</Header>
       <Area {...config} />
       {/* {Chart} */}
+      <StyledDiv>
       <ImportantText>{subtitle}</ImportantText>
       <Mediana>{extraValue}</Mediana>
+      <Icon>{icon}</Icon>
+      </StyledDiv>
     </Container>
   );
 };

@@ -7,6 +7,7 @@ import LoginPage from "./pages/loginPage";
 import RegisterPage from "./pages/registerPage";
 import DashboardPage from "./pages/dashboardPage";
 import ChartPage from "./pages/chartPage";
+import InformationPage from "./pages/informationPage";
 
 const RoutesComponent = () => {
   return (
@@ -27,7 +28,7 @@ const RoutesComponent = () => {
         /> 
           <Route
           path={"/Informacje"}
-          element={<PrivateRoute Component={() => <DashboardPage />} />}
+          element={<PrivateRoute Component={() => <InformationPage />} />}
         /> 
       </Routes>
     </BrowserRouter>

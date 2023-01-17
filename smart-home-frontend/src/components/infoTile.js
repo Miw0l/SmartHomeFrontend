@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import React from "react";
-import { Area } from "@ant-design/plots";
-import {TbTemperatureCelsius} from "react-icons/tb"
 
 const Header = styled.h2`
   font-weight: 300;

@@ -192,7 +192,7 @@ const LoginPage = () => {
             }}
           ></input>
           {/* <input type="submit" disabled={!validForm()}></input> */}
-          <LoginButton disabled={!validForm()} onClick={handleSubmit}>
+          <LoginButton disabled={!validForm()} onClick={loginUser}>
             Zaloguj
           </LoginButton>
           {/* <StyledLink to="/register">Utwórz konto</StyledLink> */}
