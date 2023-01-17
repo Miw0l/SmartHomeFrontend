@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import { Area } from "@ant-design/plots";
+import { Area, Line } from "@ant-design/plots";
 
 const Header = styled.h2`
   font-weight: 400;
@@ -10,42 +10,79 @@ const Header = styled.h2`
 const ImportantText = styled.p`
   font-weight: bold;
   font-size: 18px;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   position: relative;
 `;
 
 const Container = styled.div`
   padding: 16px;
   flex: ${(props) => props.flex ?? 1};
-  margin: 16px;
+  margin: 10px;
   border-radius: 15px;
-  box-shadow: 8px 8px 50px 0px rgba(66, 68, 90, 0.4);
+  box-shadow: 4px 4px 30px 0px rgba(66, 68, 90, 0.15);
   display: flex;
   flex-direction: column;
   // align-items: flex-start;
 `;
 
 const Mediana = styled.p`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
-  margin-top: 0;
+  margin-bottom: 10px;
+  margin-left: 10px;
   color: green;
 `;
+
+const Icon = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 7px;
+  margin-left: 5px;
+  color: black;
+`;
+
+
+const StyledDiv = styled.div`
+  align-items: center;
+  display: flex;
+  margin-right: 30px;
+  justify-content: flex-start;
+  margin-bottom: 0px;
+`;
+
+
+const getIconFromName = ({chartType, config}) => {
+  switch (chartType) {
+    case 'Line':
+      return <Line {...config} />;
+    case 'Area':
+      return <Area {...config} />;
+    // all other supported icons
+  }
+}
+
 
 const ChartTile = ({
   config,
   title,
   description,
+  chartType,
   extraValue,
   subtitle,
   flex,
+  icon
 }) => {
+  // const Chart = getIconFromName(chartType, config);
   return (
     <Container flex={flex}>
       <Header>{title}</Header>
       <Area {...config} />
+      {/* {Chart} */}
+      <StyledDiv>
       <ImportantText>{subtitle}</ImportantText>
       <Mediana>{extraValue}</Mediana>
+      <Icon>{icon}</Icon>
+      </StyledDiv>
     </Container>
   );
 };

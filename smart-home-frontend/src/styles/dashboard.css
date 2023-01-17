@@ -1,0 +1,27 @@
+
+.Dashboard{
+    padding: 20px;
+    background-color: #f2f2f4;
+}
+.napisBaner {
+    height: 65px;
+    align-items: center;
+    display: flex;
+    background-color: #f2f2f4;
+}
+
+.Napis {
+    /* margin: 0px;
+    padding-left: 20px;
+    margin-left: 25px; */
+    font-weight: 400;
+    font-size: 25px;
+}
+
+.Banner {
+        margin: 0px;
+        padding-left: 20px;
+        margin-left: 25px;
+        /* font-weight: 400; */
+        /* font-size: 25px; */
+}

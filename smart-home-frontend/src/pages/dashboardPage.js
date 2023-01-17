@@ -1,42 +1,45 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { appColors } from "../components/utils/colors";
-import Sidebar from "../components/sidebar";
 import { useAuthUser } from "react-auth-kit";
 import MainLayout from "../components/layout/mainLayout";
-import TemperatureIndoorChart from "../components/temperatureOutdoor";
-import { messages } from "../data/messages";
 import ChartTile from "../components/chart_tile";
-const Dupa = styled.div`
-  display: flex;
-`;
+import InfoTile from "../components/infoTile";
+import { Box } from "@mui/material";
+import "../styles/dashboard.css";
+import {TbTemperatureCelsius} from "react-icons/tb"
+import {WiHumidity} from "react-icons/wi"
 
-const Dupa2 = styled.div`
-  display: flex;
-  flex: 7;
-`;
-
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-`;
-
-const Row = styled.div`
-  display: flex;
-`;
 
 const DashboardPage = () => {
-  const [temperature, setTemperature] = useState([]);
-  const [sensorsList, setSensorsList] = useState([]);
-  const [observation, setObservation] = useState([]);
+  const [temperatureOutdoor, setTemperatureOutdoor] = useState([]);
+  const [temperatureIndoor, setTemperatureIndoor] = useState([]);
+  const [humidityOutdoor, setHumidityOutdoor] = useState([]);
+  const [humidityIndoor, setHumidityIndoor] = useState([]);
+  const [averageTemperatureOutdoor, setAverageTemperatureOutdoor] = useState([]);
+  const [averageTemperatureIndoor, setAverageTemperatureIndoor] = useState([]);
+  const [averageHumidityOutdoor, setAverageHumidityOutdoor] = useState([]);
+  const [averageHumidityIndoor, setAverageHumidityIndoor] = useState([]);
+  const [actualTemperatureIndoor, setActualTemperatureIndoor] = useState([]);
+  const [actualTemperatureOutdoor, setActualTemperatureOutdoor] = useState([]);
+  const [actualHummidityIndoor, setActualHumidityIndoor] = useState([]);
+  const [actualHummidityOutdoor, setActualHumidityOutdoor] = useState([]);
   const auth = useAuthUser();
   const user = auth();
-
+  console.log(user);
+  
   useEffect(() => {
-    handleFetchObservation();
     handleFetchSensors();
+    handleFetchTemperatureOutdoor();
+    handleFetchTemperatureIndoor();
+    handleFetchActualTemperatureOutdoor();
+    handleFetchActualTemperatureIndoor();
+    handleFetchHumidityOutdoor();
+    handleFetchHumidityIndoor();
+    handleFetchActualHumidityOutdoor();
+    handleFetchActualHumidityIndoor();
+    handleFetchAverageTemperatureOutdoor();
+    handleFetchAverageTemperatureIndoor();
+    handleFetchAverageHumidityOutdoor();
+    handleFetchAverageHumidityIndoor();
   }, []);
 
   const handleFetchSensors = async () => {
@@ -44,34 +47,111 @@ const DashboardPage = () => {
       `http://localhost:8080/sensor/getAll/user/` + auth().user
     );
     const data = await response.json();
-    setSensorsList([...sensorsList, ...data]);
     console.log(data);
+    //sensors = data;
   };
 
-  const handleFetchObservation = async () => {
-    const tempOutdoorSensorId = auth().devices[0].sensors[0].id;
+  const handleFetchTemperatureOutdoor = async () => {
     const response = await fetch(
-      `http://localhost:8080/observation/get/` + tempOutdoorSensorId
+      "http://localhost:8080/observation/get/" + auth().user + "/temperatureOutdoor"
     );
     const data = await response.json();
-    observation.push(data);
-    setTemperature(observation.at(0));
-    setObservation([...observation, ...data]);
-    console.log(data);
+    setTemperatureOutdoor(data);
+  };
+
+  const handleFetchActualTemperatureOutdoor = async () => {
+    const response = await fetch(
+      "http://localhost:8080/observation/getLastObservation/" + auth().user + "/temperatureOutdoor"
+    );
+    const data = await response.json();
+    setActualTemperatureOutdoor(data.value);
+  };
+
+  const handleFetchAverageTemperatureOutdoor = async () => {
+    const response = await fetch(
+      "http://localhost:8080/observation/getAverage/" + auth().user + "/temperatureOutdoor"
+    );
+    const data = await response.json();
+    setAverageTemperatureOutdoor(data);
+  };
+
+  const handleFetchTemperatureIndoor = async () => {
+    //const tempOutdoorSensorId = auth().devices[0].sensors[0].id;
+    const response = await fetch(
+      "http://localhost:8080/observation/get/" + auth().user + "/temperatureIndoor"
+    );
+    const data = await response.json();
+    setTemperatureIndoor(data);
+  };
+
+  const handleFetchActualTemperatureIndoor = async () => {
+    const response = await fetch(
+      "http://localhost:8080/observation/getLastObservation/" + auth().user + "/temperatureIndoor"
+    );
+    const data = await response.json();
+    setActualTemperatureIndoor(data.value);
+  };
+
+  const handleFetchAverageTemperatureIndoor = async () => {
+    const response = await fetch(
+      "http://localhost:8080/observation/getAverage/" + auth().user + "/temperatureIndoor"
+    );
+    const data = await response.json();
+    setAverageTemperatureIndoor(data);
+  };
+
+  const handleFetchHumidityOutdoor = async () => {
+    const response = await fetch(
+      "http://localhost:8080/observation/get/" + auth().user + "/humidityOutdoor"
+    );
+    const data = await response.json();
+    setHumidityOutdoor(data);
   };
   
+  const handleFetchActualHumidityOutdoor = async () => {
+    const response = await fetch(
+      "http://localhost:8080/observation/getLastObservation/" + auth().user + "/humidityOutdoor"
+    );
+    const data = await response.json();
+    setActualHumidityOutdoor(data.value);
+  };
 
-  const config = {
-    legend: {
-      title: "dupa",
-    },
-    title: {
-      visible: true,
-      text: "dupa",
-    },
+  const handleFetchAverageHumidityOutdoor = async () => {
+    const response = await fetch(
+      "http://localhost:8080/observation/getAverage/" + auth().user + "/humidityOutdoor"
+    );
+    const data = await response.json();
+    setAverageHumidityOutdoor(data);
+  };
+
+  const handleFetchHumidityIndoor = async () => {
+    const response = await fetch(
+      "http://localhost:8080/observation/get/" + auth().user + "/humidityIndoor"
+    );
+    const data = await response.json();
+    setHumidityIndoor(data);
+  };
+
+  const handleFetchActualHumidityIndoor = async () => {
+    const response = await fetch(
+      "http://localhost:8080/observation/getLastObservation/" + auth().user + "/humidityIndoor"
+    );
+    const data = await response.json();
+    setActualHumidityIndoor(data.value);
+  };
+
+  const handleFetchAverageHumidityIndoor = async () => {
+    const response = await fetch(
+      "http://localhost:8080/observation/getAverage/" + auth().user + "/humidityIndoor"
+    );
+    const data = await response.json();
+    setAverageHumidityIndoor(data);
+  };
+
+  const configTemperatureOutdoor = {
     tooltip: {
       showTitle: true,
-      title: "Wykres temperatury na zewnątrz",
+      title: "Temperatura na zewnątrz",
     },
     animation: {
       appear: {
@@ -79,55 +159,182 @@ const DashboardPage = () => {
         duration: 5000,
       },
     },
-    data: temperature,
+    data: temperatureOutdoor,
     xField: "creationDt",
     yField: "value",
     xAxis: {
-      tickCount: 5,
+      tickCount: 6,
     },
-
     width: 10,
     animation: true,
-    slider: {
-      start: 0.1,
-      end: 0.9,
-      trendCfg: {
-        isArea: true,
+  };
+
+  const configTemperatureIndoor = {
+    tooltip: {
+      showTitle: true,
+      title: "Temperatura w pomieszczeniu",
+    },
+    animation: {
+      appear: {
+        animation: "path-in",
+        duration: 5000,
       },
     },
+    data: temperatureIndoor,
+    xField: "creationDt",
+    yField: "value",
+    xAxis: {
+      tickCount: 6,
+    },
+    width: 10,
+    animation: true,
   };
+
+  const configHumidityOutdoor = {
+    tooltip: {
+      showTitle: true,
+      title: "Wilgotność powietrza na zewnątrz",
+    },
+    animation: {
+      appear: {
+        animation: "path-in",
+        duration: 5000,
+      },
+    },
+    data: humidityOutdoor,
+    xField: "creationDt",
+    yField: "value",
+    xAxis: {
+      tickCount: 6,
+    },
+    width: 10,
+    animation: true,
+  };
+
+  const configHumidityIndoor = {
+    tooltip: {
+      showTitle: true,
+      title: "Wilgotność powietrza w pomieszczeniu",
+    },
+    animation: {
+      appear: {
+        animation: "path-in",
+        duration: 5000,
+      },
+    },
+    data: humidityIndoor,
+    xField: "creationDt",
+    yField: "value",
+    xAxis: {
+      tickCount: 6,
+    },
+    width: 10,
+    animation: true,
+  };
+
   return (
     <MainLayout>
-      <Column>
-        <Row>
+      <div className="Banner">
+        <div className="napisBaner">
+          <h1 className="Napis">Witaj {user.username}!</h1>
+        </div>
+      </div>
+      <div>
+        <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+          <Box gridColumn="span 3">
+          <InfoTile
+              title="Aktualna temperatura na zewnątrz:"
+              config={"config"}
+              icon={
+                <TbTemperatureCelsius
+                  size={30}
+                />}
+              extraValue={actualTemperatureOutdoor}
+            />
+          </Box>
+          <Box gridColumn="span 3" >
+          <InfoTile
+              title="Aktualna temperatura w pomieszczeniu:"
+              config={"config"}
+              icon={
+                <TbTemperatureCelsius
+                  size={30}
+                />}
+              extraValue={actualTemperatureIndoor}
+            />
+          </Box>
+          <Box gridColumn="span 3">
+          <InfoTile
+              title="Aktualna wilgotność powietrza na zewnątrz:"
+              config={"config"}
+              icon={
+                <TbTemperatureCelsius
+                  size={30}
+                />}
+              extraValue={actualHummidityOutdoor}
+            />
+          </Box>
+          <Box gridColumn="span 3">
+          <InfoTile
+              title="Aktualna wilgotność powietrza w pomieszczeniu"
+              config={"config"}
+              icon={
+                <TbTemperatureCelsius
+                  size={30}
+                />}
+              extraValue={actualHummidityIndoor}
+            />
+          </Box>
+          <Box gridColumn="span 6" gridRow="span 2">
           <ChartTile
-            title="Wykres temperatury na zewnątrz"
-            config={config}
-            subtitle="Średnia temperatura:"
-            extraValue={21.7}
-          />
+              title="Wykres temperatury na zewnątrz"
+              config={configTemperatureOutdoor}
+              subtitle="Średnia temperatura:"
+              icon={
+                <TbTemperatureCelsius
+                  size={25}
+                />}
+              extraValue={parseFloat(averageTemperatureOutdoor).toFixed(2)}
+            />
+          </Box>
+          <Box gridColumn="span 6" gridRow="span 2">
           <ChartTile
-            title="Wykres temperatury na zewnątrz"
-            config={config}
-            subtitle="Średnia temperatura:"
-            extraValue={21.7}
-          />
+              title="Wykres temperatury w pomieszczeniu"
+              config={configTemperatureIndoor}
+              subtitle="Średnia temperatura:"
+              icon={
+                <TbTemperatureCelsius
+                  size={25}
+                />}
+              extraValue={parseFloat(averageTemperatureIndoor).toFixed(2)}
+            />
+          </Box>
+          <Box gridColumn="span 6" gridRow="span 2">
           <ChartTile
-            title="Wykres temperatury na zewnątrz"
-            config={config}
-            subtitle="Średnia temperatura:"
-            extraValue={21.7}
-          />
-        </Row>
-        <Row>
+              title="Wykres wilgotności powietrza na zewnątrz"
+              config={configHumidityOutdoor}
+              subtitle="Średnia wilgotność:"
+              icon={
+                <WiHumidity
+                  size={25}
+                />}
+              extraValue={parseFloat(averageHumidityOutdoor).toFixed(2)}
+            />
+          </Box>
+          <Box gridColumn="span 6" gridRow="span 2">
           <ChartTile
-            title="Wykres temperatury na zewnątrz"
-            config={config}
-            subtitle="Średnia temperatura:"
-            mediana={21.7}
-          />
-        </Row>
-      </Column>
+              title="Wykres wilgotności powietrza w pomieszczeniu"
+              config={configHumidityIndoor}
+              subtitle="Średnia wilgotność:"
+              icon={
+                <WiHumidity
+                  size={25}
+                />}
+              extraValue={parseFloat(averageHumidityIndoor).toFixed(2)}
+            />
+          </Box>
+        </Box>
+      </div>
     </MainLayout>
   );
 };

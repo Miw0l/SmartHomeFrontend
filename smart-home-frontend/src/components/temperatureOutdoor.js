@@ -36,7 +36,7 @@ const TemperatureIndoorChart = () => {
     const data = await response.json();
     //sensorsList.push(data);
     //console.log(sensorsList);
-    setSensorsList([...sensorsList, ...data]);
+    setSensorsList(data);
     console.log(sensorsList);
   };
 
@@ -71,7 +71,7 @@ const TemperatureIndoorChart = () => {
         duration: 5000,
       },
     },
-    data: observation,
+    data: messages,
     xField: "creationDt",
     yField: "value",
     xAxis: {

@@ -6,6 +6,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import LoginPage from "./pages/loginPage";
 import RegisterPage from "./pages/registerPage";
 import DashboardPage from "./pages/dashboardPage";
+import ChartPage from "./pages/chartPage";
+import InformationPage from "./pages/informationPage";
 
 const RoutesComponent = () => {
   return (
@@ -19,6 +21,14 @@ const RoutesComponent = () => {
          <Route
           path={"/dashboard"}
           element={<PrivateRoute Component={() => <DashboardPage />} />}
+        /> 
+          <Route
+          path={"/Wykresy"}
+          element={<PrivateRoute Component={() => <ChartPage />} />}
+        /> 
+          <Route
+          path={"/Informacje"}
+          element={<PrivateRoute Component={() => <InformationPage />} />}
         /> 
       </Routes>
     </BrowserRouter>
