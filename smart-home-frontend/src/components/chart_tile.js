@@ -51,16 +51,14 @@ const StyledDiv = styled.div`
 `;
 
 
-const getIconFromName = ({chartType, config}) => {
+const getChart = (chartType, config) => {
   switch (chartType) {
-    case 'Line':
-      return <Line {...config} />;
-    case 'Area':
+    case "Area":
       return <Area {...config} />;
-    // all other supported icons
+    case "Line":
+      return <Line {...config} />;
   }
-}
-
+};
 
 const ChartTile = ({
   config,
@@ -72,12 +70,13 @@ const ChartTile = ({
   flex,
   icon
 }) => {
-  // const Chart = getIconFromName(chartType, config);
+  console.log(chartType);
+  const Chart = getChart(chartType, config);
+  // console.log(Chart);
   return (
     <Container flex={flex}>
       <Header>{title}</Header>
-      <Area {...config} />
-      {/* {Chart} */}
+      {Chart}
       <StyledDiv>
       <ImportantText>{subtitle}</ImportantText>
       <Mediana>{extraValue}</Mediana>
