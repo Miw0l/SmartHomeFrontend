@@ -49,7 +49,8 @@ const DashboardPage = () => {
             extraValue={sensorsList.length}
           />
         </Box>
-        <Box gridColumn="span 10" >
+        <Box gridColumn="span 1" className="Table"/>
+        <Box gridColumn="span 10" className="Table">
             <DeviceTable></DeviceTable>
         </Box>
 

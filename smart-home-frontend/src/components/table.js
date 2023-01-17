@@ -15,13 +15,17 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useAuthUser } from "react-auth-kit";
 
-function Row() {
+function Row(props) {
+  const {row} = props;
   const [open, setOpen] = React.useState(false);
   const auth = useAuthUser();
   const user = auth();
+  console.log("test")
+  console.log(user.devices);
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+        
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -31,12 +35,13 @@ function Row() {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
+
         <TableCell component="th" scope="row">
-          {auth().devices[0].deviceModel}
+          {row.deviceModel}
         </TableCell>
-        <TableCell align="right">{auth().devices[0].creationDate}</TableCell>
-        <TableCell align="right">{auth().devices[0].MAC}</TableCell>
-        <TableCell align="right">{auth().devices[0].sensors.length}</TableCell>
+        <TableCell align="right">{row.creationDate}</TableCell>
+        <TableCell align="right">{row.MAC}</TableCell>
+        <TableCell align="right">{row.sensors.length}</TableCell>
       </TableRow>
 
       <TableRow>
@@ -55,7 +60,7 @@ function Row() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {auth().devices[0].sensors.map((historyRow) => (
+                  {row.sensors.map((historyRow) => (
                     <TableRow key={historyRow.model}>
                       <TableCell component="th" scope="row">
                         {historyRow.model}
@@ -77,6 +82,7 @@ function Row() {
 export default function CollapsibleTable() {
     const auth = useAuthUser();
     const user = auth();
+    
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -91,7 +97,7 @@ export default function CollapsibleTable() {
         </TableHead>
         <TableBody>
           {auth().devices.map((device) => (
-            <Row key={device.deviceModel} row={device.deviceModel} />
+            <Row key={device.deviceModel} row={device} />
           ))}
         </TableBody>
       </Table>

@@ -44,7 +44,7 @@ const DashboardPage = () => {
   const [messages, setMesseges] = useState([]);
   const auth = useAuthUser();
   const user = auth();
-  console.log(user);
+  // console.log(user.data);
 
   useEffect(() => {
     handleFetchSensors();
