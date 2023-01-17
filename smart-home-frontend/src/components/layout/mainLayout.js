@@ -17,7 +17,6 @@ const MainLayout = ({ children }) => {
       </Sider>
       <Layout>
         <Content style={{ overflow: "auto" }}>{children}</Content>
-        <Footer style={{ height: "16px" }}>Footer</Footer>
       </Layout>
     </Layout>
   );
