@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import React from "react";
-import { Area, Line } from "@ant-design/plots";
+import { Area } from "@ant-design/plots";
+import {TbTemperatureCelsius} from "react-icons/tb"
 
 const Header = styled.h2`
-  font-weight: 400;
-  font-size: 22px;
+  font-weight: 300;
+  font-size: 18px;
+  padding: 0px;
 `;
 
 const ImportantText = styled.p`
@@ -15,7 +17,7 @@ const ImportantText = styled.p`
 `;
 
 const Container = styled.div`
-  padding: 16px;
+  padding: 13px;
   flex: ${(props) => props.flex ?? 1};
   margin: 10px;
   border-radius: 15px;
@@ -25,43 +27,40 @@ const Container = styled.div`
   // align-items: flex-start;
 `;
 
+const StyledDiv = styled.div`
+  align-items: center;
+  display: flex;
+  margin-right: 25px;
+  justify-content: flex-end;
+`;
+
 const Mediana = styled.p`
   font-size: 20px;
   font-weight: bold;
-  margin-top: 0;
+//   margin-top: 0;
   color: green;
+  margin: 0px, 5px, 5px, 5px;
 `;
 
-const getIconFromName = ({chartType, config}) => {
-  switch (chartType) {
-    case 'Line':
-      return <Line {...config} />;
-    case 'Area':
-      return <Area {...config} />;
-    // all other supported icons
-  }
-}
 
-
-const ChartTile = ({
+const InfoTile = ({
   config,
   title,
-  description,
-  chartType,
+  icon,
   extraValue,
   subtitle,
   flex,
 }) => {
-  // const Chart = getIconFromName(chartType, config);
   return (
     <Container flex={flex}>
       <Header>{title}</Header>
-      <Area {...config} />
-      {/* {Chart} */}
-      <ImportantText>{subtitle}</ImportantText>
+      {/* <h2>{config}</h2> */}
+      <StyledDiv>
       <Mediana>{extraValue}</Mediana>
+      {icon}
+      </StyledDiv>
     </Container>
   );
 };
 
-export default ChartTile;
+export default InfoTile;

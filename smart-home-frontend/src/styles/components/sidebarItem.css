@@ -28,3 +28,9 @@
     margin: 3px;
     color: rgb(255, 81, 81);
 }
+hr {
+    margin: 0;
+}
+.NazwaProjektu{
+    height: 65 px;
+}
