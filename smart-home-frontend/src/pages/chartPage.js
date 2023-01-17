@@ -16,6 +16,7 @@ import { TbTemperatureCelsius } from "react-icons/tb";
 import { Select } from "antd";
 import { options } from "../data/chartsOptions";
 import { Line } from "@ant-design/plots";
+import useFetch from "../data/useFetch";
 
 const Dupa = styled.div`
   display: flex;
@@ -40,14 +41,29 @@ const DashboardPage = () => {
   const [temperature, setTemperature] = useState([]);
   const [sensorsList, setSensorsList] = useState([]);
   const [observation, setObservation] = useState([]);
+  const [messages, setMesseges] = useState([]);
   const auth = useAuthUser();
   const user = auth();
   console.log(user);
 
   useEffect(() => {
-    // handleFetchObservation();
-    // handleFetchSensors();
+    handleFetchSensors();
+    handleFetchTemperatureIndoor();
+
+    console.log("test");
   }, []);
+
+  const onChange = async (value) => {
+    const url = "http://localhost:8080/observation/get/" + auth().user + "/" + value;
+    console.log(url);
+    console.log(`selected ${value}`);
+    const response = await fetch(
+      url
+    );
+    const data = await response.json();
+    console.log(data);
+    setMesseges(data);
+  };
 
   const handleFetchSensors = async () => {
     const response = await fetch(
@@ -55,29 +71,29 @@ const DashboardPage = () => {
     );
     const data = await response.json();
     setSensorsList([...sensorsList, ...data]);
-    console.log(data);
+    // console.log(data);
   };
 
-  const handleFetchObservation = async () => {
-    const tempOutdoorSensorId = auth().devices[0].sensors[0].id;
+  const handleFetchTemperatureIndoor = async () => {
+    //const tempOutdoorSensorId = auth().devices[0].sensors[0].id;
     const response = await fetch(
-      `http://localhost:8080/observation/get/` + tempOutdoorSensorId
+      "http://localhost:8080/observation/get/" + auth().user + "/temperatureIndoor"
     );
     const data = await response.json();
-    observation.push(data);
-    setTemperature(observation.at(0));
-    setObservation([...observation, ...data]);
-    console.log(data);
+    setMesseges(data);
   };
-  console.log(messages);
+  // console.log("Dupa");
+  // console.log(sensorsList);
+  // const test = sensorsList.filter((sensor) => sensor.model === 'Dht21 temperature sensor');
+  // console.log(test);
 
   const config = {
     legend: {
       title: "dupa",
     },
     slider: {
-        start: 0.1,
-        end: 0.5,
+        start: 0,
+        end: 1,
       },
     title: {
       visible: true,
@@ -99,17 +115,11 @@ const DashboardPage = () => {
     xAxis: {
       tickCount: 5,
     },
-
     width: 10,
     animation: true,
-    // slider: {
-    //   start: 0.1,
-    //   end: 0.9,
-    //   trendCfg: {
-    //     isArea: true,
-    //   },
-    // },
   };
+
+  // console.log(options);
   return (
     <MainLayout>
       <div className="Banner">
@@ -122,17 +132,20 @@ const DashboardPage = () => {
           style={{
             width: 300,
           }}
+          onChange={onChange}
           placeholder="Wybierz wykres"
           options={options}
+          defaultValue={{
+            value: 'temperatureIndoor',
+            label: 'Temperatura w środku mieszkania',
+          }}
         />
       </div>
       <div>
         <ChartTile
-          // title="Wykres temperatury na zewnątrz"
           config={config}
-        //   chartType="Area"
+          chartType="Area"
         />
-        {/* <Line {...config} /> */}
       </div>
     </MainLayout>
   );

@@ -7,6 +7,7 @@ import { Box } from "@mui/material";
 import "../styles/dashboard.css";
 import {TbTemperatureCelsius} from "react-icons/tb"
 import {WiHumidity} from "react-icons/wi"
+import useFetch from "../data/useFetch";
 
 
 const DashboardPage = () => {
@@ -47,10 +48,9 @@ const DashboardPage = () => {
       `http://localhost:8080/sensor/getAll/user/` + auth().user
     );
     const data = await response.json();
-    console.log(data);
-    //sensors = data;
+    // console.log(data);
+    // sensors = data;
   };
-
   const handleFetchTemperatureOutdoor = async () => {
     const response = await fetch(
       "http://localhost:8080/observation/get/" + auth().user + "/temperatureOutdoor"
@@ -64,6 +64,7 @@ const DashboardPage = () => {
       "http://localhost:8080/observation/getLastObservation/" + auth().user + "/temperatureOutdoor"
     );
     const data = await response.json();
+    // console.log(data);
     setActualTemperatureOutdoor(data.value);
   };
 
@@ -231,7 +232,7 @@ const DashboardPage = () => {
     width: 10,
     animation: true,
   };
-
+  // console.log(configHumidityIndoor);
   return (
     <MainLayout>
       <div className="Banner">
@@ -294,6 +295,7 @@ const DashboardPage = () => {
                 <TbTemperatureCelsius
                   size={25}
                 />}
+                chartType="Line"
               extraValue={parseFloat(averageTemperatureOutdoor).toFixed(2)}
             />
           </Box>
@@ -306,6 +308,7 @@ const DashboardPage = () => {
                 <TbTemperatureCelsius
                   size={25}
                 />}
+                chartType="Line"
               extraValue={parseFloat(averageTemperatureIndoor).toFixed(2)}
             />
           </Box>
@@ -318,6 +321,7 @@ const DashboardPage = () => {
                 <WiHumidity
                   size={25}
                 />}
+              chartType="Line"
               extraValue={parseFloat(averageHumidityOutdoor).toFixed(2)}
             />
           </Box>
@@ -330,6 +334,7 @@ const DashboardPage = () => {
                 <WiHumidity
                   size={25}
                 />}
+                chartType="Line"
               extraValue={parseFloat(averageHumidityIndoor).toFixed(2)}
             />
           </Box>

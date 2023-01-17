@@ -1,22 +1,22 @@
 export const options = [
     {
-        value: '1',
+        value: 'temperatureIndoor',
         label: 'Temperatura w środku mieszkania',
       },
       {
-        value: '2',
+        value: 'temperatureOutdoor',
         label: 'Temperatura na dworze',
       },
       {
-        value: '3',
+        value: 'atmosphericPressureIndoor',
         label: 'Ciśnienie atmosferyczne',
       },
       {
-        value: '4',
+        value: 'humidityIndoor',
         label: 'Wilgotność powietrza w mieszkaniu',
       },
       {
-        value: '5',
+        value: 'humidityOutdoor',
         label: 'Wilgotność powietrza na dworze',
       }
 ]
