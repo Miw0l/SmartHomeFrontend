@@ -9,6 +9,7 @@ import { options } from "../data/chartsOptions";
 import InfoTile from "../components/infoTile";
 import {TbTemperatureCelsius} from "react-icons/tb"
 import {WiHumidity} from "react-icons/wi"
+import DeviceTable from "../components/table"
 
 const DashboardPage = () => {
   const auth = useAuthUser();
@@ -34,19 +35,22 @@ const DashboardPage = () => {
     <MainLayout>
       <div>
       <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-        <Box gridColumn="span 4">
+        <Box gridColumn="span 6">
         <InfoTile
             title="Adres MAC mikrokontrolera NodeMCU: "
             config={"config"}
             extraValue={auth().mac}
           />
         </Box>
-        <Box gridColumn="span 4" >
+        <Box gridColumn="span 6" >
         <InfoTile
             title="Ilość czujników podłączonych do Arduino Mega 2560: "
             config={"config"}
             extraValue={sensorsList.length}
           />
+        </Box>
+        <Box gridColumn="span 10" >
+            <DeviceTable></DeviceTable>
         </Box>
 
         {/* ROW 2 */}
