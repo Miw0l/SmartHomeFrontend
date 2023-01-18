@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useIsAuthenticated } from "react-auth-kit";
 
 const PrivateRoute = ({ Component }) => {

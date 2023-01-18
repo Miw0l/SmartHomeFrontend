@@ -1,23 +1,7 @@
-// import { useRouter } from "next/router";
-// import BasicLayout  from "../components/molecules/basic_layout"
-// import { useForm } from 'react-hook-form';
 import { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { appColors } from "../components/utils/colors";
-import { MacroOff } from "@mui/icons-material";
 import axios from "axios";
-import { useSignIn } from "react-auth-kit";
-// import Link from "next/link";
-// import axios from "axios";
-
-// const Card = styled.form`
-// display: flex;
-// flex-direction: column;
-// align-items: center;
-// justify-content: center;
-// background-color: green;
-// `;
 
 const LoginContainer = styled.div`
   align-items: center;
@@ -25,8 +9,6 @@ const LoginContainer = styled.div`
   display: flex;
   position: absolute;
   overflow: auto;
-  // left: 50%;
-  //transform: translate(-50%, -50%);
 
   padding: 32px;
   border-radius: 15px;
@@ -45,7 +27,6 @@ const LoginContainer = styled.div`
     position: initial;
     display: flex;
     transform: none;
-    //  padding-bottom: 100px;
   }
 `;
 
@@ -84,14 +65,7 @@ const LoginButton = styled.button`
   background-color: ${appColors.darkGreen};
 `;
 
-const StyledLink = styled(Link)`
-  color: ${appColors.darkGreen};
-  margin: "50px";
-  // textdecoration: "none";
-`;
-
 const RegisterPage = () => {
-  const signIn = useSignIn();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [MAC, setMAC] = useState();
@@ -107,16 +81,9 @@ const RegisterPage = () => {
         password: password,
         MAC: MAC,
       })
-      .then((e) => {
-        console.log(e);
-      });
-    console.log("test");
   };
 
   const handleSubmit = (e) => {
-    console.log(email);
-    console.log(password);
-    console.log(MAC);
     registerUser();
     e.preventDefault();
   };
@@ -124,7 +91,6 @@ const RegisterPage = () => {
   return (
     <Wrapper>
       <LoginContainer>
-        {/* <Card onSubmit={handleSubmit}> */}
         <h1
           style={{
             textAlign: "center",
@@ -137,7 +103,7 @@ const RegisterPage = () => {
         </h1>
         <p style={{ marginBottom: "0" }}>Panel rejestracji</p>
         <FormWrapper onSubmit={handleSubmit}>
-          <label>Email</label>
+          <label>Nazwa użytkownika</label>
           <input
             type="text"
             name="email"
@@ -193,10 +159,7 @@ const RegisterPage = () => {
               border: "none",
             }}
           ></input>
-          {/* <input type="submit" disabled={!validForm()}></input> */}
-          <LoginButton onClick={handleSubmit}>Zarejestruj</LoginButton>
-          {/* <StyledLink to="/register">Utwórz konto</StyledLink> */}
-          {/* <Link to="/register" style={{textDecoration: "none", color: appColors.darkGreen }}>Utwórz konto</Link> */}
+          <LoginButton disabled={!validForm()} onClick={handleSubmit}>Zarejestruj</LoginButton>
         </FormWrapper>
       </LoginContainer>
     </Wrapper>

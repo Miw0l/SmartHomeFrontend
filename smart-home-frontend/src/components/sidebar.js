@@ -1,17 +1,13 @@
 import { useSignOut } from "react-auth-kit";
 import { Menu } from 'antd';
 import { AiOutlineHome } from "react-icons/ai";
-import { NavLink, useLocation, Link } from "react-router-dom";
-import "../styles/components/sidebarItem.css";
-
+import { NavLink, Link } from "react-router-dom";
 import {
   AiOutlineDashboard,
   AiOutlineLineChart,
   AiOutlineUser,
   AiOutlineLogout
 } from "react-icons/ai";
-// import { Link } from "@mui/material";
-
 
 const divStyle = {
   display: "flex",
@@ -37,10 +33,6 @@ const Sidebar = () => {
   const signOut = useSignOut();
   const handleLogOut = () => {
     signOut();
-  };
-
-  const onClick = (e) => {
-    console.log('click ', e);
   };
 
   return (
@@ -79,4 +71,5 @@ const Sidebar = () => {
     </div>
   );
 };
+
 export default Sidebar;

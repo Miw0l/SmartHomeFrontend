@@ -4,11 +4,9 @@ import MainLayout from "../components/layout/mainLayout";
 import ChartTile from "../components/chart_tile";
 import InfoTile from "../components/infoTile";
 import { Box } from "@mui/material";
-import "../styles/dashboard.css";
 import {TbTemperatureCelsius} from "react-icons/tb"
 import {WiHumidity} from "react-icons/wi"
-import useFetch from "../data/useFetch";
-
+import {GoCalendar} from "react-icons/go"
 
 const DashboardPage = () => {
   const [temperatureOutdoor, setTemperatureOutdoor] = useState([]);
@@ -23,12 +21,13 @@ const DashboardPage = () => {
   const [actualTemperatureOutdoor, setActualTemperatureOutdoor] = useState([]);
   const [actualHummidityIndoor, setActualHumidityIndoor] = useState([]);
   const [actualHummidityOutdoor, setActualHumidityOutdoor] = useState([]);
+  const [lastDateRainDetected, setLastDateRainDetected] = useState([]);
+  const [lastDateWaterpumpPowerOn, setLastDateWaterpumpPowerOn] = useState([]);
   const auth = useAuthUser();
   const user = auth();
   console.log(user);
   
   useEffect(() => {
-    handleFetchSensors();
     handleFetchTemperatureOutdoor();
     handleFetchTemperatureIndoor();
     handleFetchActualTemperatureOutdoor();
@@ -41,16 +40,10 @@ const DashboardPage = () => {
     handleFetchAverageTemperatureIndoor();
     handleFetchAverageHumidityOutdoor();
     handleFetchAverageHumidityIndoor();
+    handleFetchLastDateRainDetected();
+    handleFetchLastDateWaterpumpPowerOn();
   }, []);
 
-  const handleFetchSensors = async () => {
-    const response = await fetch(
-      `http://localhost:8080/sensor/getAll/user/` + auth().user
-    );
-    const data = await response.json();
-    // console.log(data);
-    // sensors = data;
-  };
   const handleFetchTemperatureOutdoor = async () => {
     const response = await fetch(
       "http://localhost:8080/observation/get/" + auth().user + "/temperatureOutdoor"
@@ -149,6 +142,24 @@ const DashboardPage = () => {
     setAverageHumidityIndoor(data);
   };
 
+  const handleFetchLastDateRainDetected = async () => {
+    const response = await fetch(
+      "http://localhost:8080/observation/getLastDateOfRainDetected/" + auth().user
+    );
+    const data = await response.json();
+    console.log(data);
+    setLastDateRainDetected(data.creationDt);
+  };
+
+  const handleFetchLastDateWaterpumpPowerOn = async () => {
+    const response = await fetch(
+      "http://localhost:8080/observation/get/" + auth().user + "/soil"
+    );
+    const data = await response.json();
+    console.log(data);
+    setLastDateWaterpumpPowerOn(data.at(0).creationDt);
+  };
+
   const configTemperatureOutdoor = {
     tooltip: {
       showTitle: true,
@@ -232,7 +243,7 @@ const DashboardPage = () => {
     width: 10,
     animation: true,
   };
-  // console.log(configHumidityIndoor);
+
   return (
     <MainLayout>
       <div className="Banner">
@@ -242,7 +253,7 @@ const DashboardPage = () => {
       </div>
       <div>
         <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-          <Box gridColumn="span 3">
+          <Box gridColumn="span 2">
           <InfoTile
               title="Aktualna temperatura na zewnątrz:"
               config={"config"}
@@ -253,7 +264,7 @@ const DashboardPage = () => {
               extraValue={actualTemperatureOutdoor}
             />
           </Box>
-          <Box gridColumn="span 3" >
+          <Box gridColumn="span 2" >
           <InfoTile
               title="Aktualna temperatura w pomieszczeniu:"
               config={"config"}
@@ -264,26 +275,48 @@ const DashboardPage = () => {
               extraValue={actualTemperatureIndoor}
             />
           </Box>
-          <Box gridColumn="span 3">
+          <Box gridColumn="span 2">
           <InfoTile
               title="Aktualna wilgotność powietrza na zewnątrz:"
               config={"config"}
               icon={
-                <TbTemperatureCelsius
+                <WiHumidity
                   size={30}
                 />}
               extraValue={actualHummidityOutdoor}
             />
           </Box>
-          <Box gridColumn="span 3">
+          <Box gridColumn="span 2">
           <InfoTile
-              title="Aktualna wilgotność powietrza w pomieszczeniu"
+              title="Aktualna wilgotność powietrza w pomieszczeniu:"
               config={"config"}
               icon={
-                <TbTemperatureCelsius
+                <WiHumidity
                   size={30}
                 />}
               extraValue={actualHummidityIndoor}
+            />
+            </Box>
+            <Box gridColumn="span 2">
+            <InfoTile
+              title="Data ostatniego wystąpienia opadów:"
+              config={"config"}
+              icon={
+                <GoCalendar
+                  size={25}
+                />}
+              extraValue={lastDateRainDetected}
+            />
+            </Box>
+            <Box gridColumn="span 2">
+            <InfoTile
+              title="Data ostatniego podlania kwiatka:"
+              config={"config"}
+              icon={
+                <GoCalendar
+                  size={25}
+                />}
+              extraValue={lastDateWaterpumpPowerOn}
             />
           </Box>
           <Box gridColumn="span 6" gridRow="span 2">

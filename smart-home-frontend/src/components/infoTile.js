@@ -7,13 +7,6 @@ const Header = styled.h2`
   padding: 0px;
 `;
 
-const ImportantText = styled.p`
-  font-weight: bold;
-  font-size: 18px;
-  margin-bottom: 6px;
-  position: relative;
-`;
-
 const Container = styled.div`
   padding: 13px;
   flex: ${(props) => props.flex ?? 1};
@@ -42,17 +35,14 @@ const Mediana = styled.p`
 
 
 const InfoTile = ({
-  config,
   title,
   icon,
   extraValue,
-  subtitle,
   flex,
 }) => {
   return (
     <Container flex={flex}>
       <Header>{title}</Header>
-      {/* <h2>{config}</h2> */}
       <StyledDiv>
       <Mediana>{extraValue}</Mediana>
       {icon}
