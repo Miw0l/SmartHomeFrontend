@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useAuthUser } from "react-auth-kit";
 import MainLayout from "../components/layout/mainLayout";
-import { messages } from "../data/messages";
-import { Box, Grid } from "@mui/material";
-import { Select } from "antd";
-import { options } from "../data/chartsOptions";
+import { Box } from "@mui/material";
 import InfoTile from "../components/infoTile";
-import {TbTemperatureCelsius} from "react-icons/tb"
-import {WiHumidity} from "react-icons/wi"
 import DeviceTable from "../components/table"
 
 const DashboardPage = () => {
@@ -27,8 +21,6 @@ const DashboardPage = () => {
     );
     const data = await response.json();
     setSensorsList(data);
-    console.log(data);
-    //sensors = data;
   };
 
   return (
@@ -53,10 +45,6 @@ const DashboardPage = () => {
         <Box gridColumn="span 10" className="Table">
             <DeviceTable></DeviceTable>
         </Box>
-
-        {/* ROW 2 */}
-
-
       </Box>
       </div>
     </MainLayout>

@@ -4,12 +4,9 @@ import MainLayout from "../components/layout/mainLayout";
 import ChartTile from "../components/chart_tile";
 import InfoTile from "../components/infoTile";
 import { Box } from "@mui/material";
-import "../styles/dashboard.css";
 import {TbTemperatureCelsius} from "react-icons/tb"
 import {WiHumidity} from "react-icons/wi"
 import {GoCalendar} from "react-icons/go"
-import useFetch from "../data/useFetch";
-
 
 const DashboardPage = () => {
   const [temperatureOutdoor, setTemperatureOutdoor] = useState([]);
@@ -31,7 +28,6 @@ const DashboardPage = () => {
   console.log(user);
   
   useEffect(() => {
-    handleFetchSensors();
     handleFetchTemperatureOutdoor();
     handleFetchTemperatureIndoor();
     handleFetchActualTemperatureOutdoor();
@@ -48,14 +44,6 @@ const DashboardPage = () => {
     handleFetchLastDateWaterpumpPowerOn();
   }, []);
 
-  const handleFetchSensors = async () => {
-    const response = await fetch(
-      `http://localhost:8080/sensor/getAll/user/` + auth().user
-    );
-    const data = await response.json();
-    // console.log(data);
-    // sensors = data;
-  };
   const handleFetchTemperatureOutdoor = async () => {
     const response = await fetch(
       "http://localhost:8080/observation/get/" + auth().user + "/temperatureOutdoor"
@@ -255,7 +243,7 @@ const DashboardPage = () => {
     width: 10,
     animation: true,
   };
-  // console.log(configHumidityIndoor);
+
   return (
     <MainLayout>
       <div className="Banner">

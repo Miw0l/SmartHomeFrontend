@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -20,8 +19,7 @@ function Row(props) {
   const [open, setOpen] = React.useState(false);
   const auth = useAuthUser();
   const user = auth();
-  console.log("test")
-  console.log(user.devices);
+
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -80,8 +78,8 @@ function Row(props) {
 }
 
 export default function CollapsibleTable() {
-    const auth = useAuthUser();
-    const user = auth();
+  const auth = useAuthUser();
+  const user = auth();
     
   return (
     <TableContainer component={Paper}>
