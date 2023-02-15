@@ -12,7 +12,7 @@ const RoutesComponent = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={"/"} element={<FirstPage />} />
+        <Route path={"/"} element={<LoginPage />} />
         <Route path={"/login"} element={<LoginPage />} />
         <Route path={"/register"} element={<RegisterPage />} />
          <Route
